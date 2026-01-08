@@ -1,10 +1,6 @@
 import importlib
 import json
-import os
-from unittest.mock import MagicMock, patch
-
-os.environ.setdefault("MONGODB_URL", "mongodb://example")
-os.environ.setdefault("DATABASE_NAME", "test")
+from unittest.mock import patch
 
 lambda_function = importlib.import_module("lambda_function")
 
