@@ -1,3 +1,1 @@
-import os
-
-BUCKET = os.environ.get("CATALOG_BUCKET", "catalog-marketplace-bucket-challenge")
+BUCKET = "catalog-marketplace-bucket-challenge"

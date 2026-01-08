@@ -1,25 +1,14 @@
-import logging
-import os
-
 from bson.objectid import ObjectId
 from pymongo import MongoClient
-
-logger = logging.getLogger(__name__)
+import os
 
 client = MongoClient(os.environ["MONGODB_URL"])
 db = client[os.environ["DATABASE_NAME"]]
 
 
-def get_catalog(owner_id: str):
-    """Return the catalog tree for the provided owner identifier."""
-    try:
-        owner_object_id = ObjectId(owner_id)
-    except Exception as exc:
-        logger.error("Could not parse owner_id=%s into ObjectId: %s", owner_id, exc)
-        return None
-
+def get_catalog(owner_id: ObjectId):
     pipeline = [
-        {"$match": {"owner_id": owner_object_id}},
+        {"$match": {"owner_id": ObjectId(owner_id)}},
         {
             "$lookup": {
                 "from": "product",
@@ -56,8 +45,4 @@ def get_catalog(owner_id: str):
     ]
 
     results = db.category.aggregate(pipeline)
-    try:
-        return results.next()
-    except StopIteration:
-        logger.info("No catalog found for owner_id=%s", owner_id)
-        return None
+    return results.next()
