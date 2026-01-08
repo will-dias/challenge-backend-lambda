@@ -1,12 +1,6 @@
 import importlib
 import os
-import sys
 from unittest.mock import MagicMock
-
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-SRC_DIRECTORY = os.path.join(PROJECT_ROOT, "src")
-if SRC_DIRECTORY not in sys.path:
-    sys.path.insert(0, SRC_DIRECTORY)
 
 from bson.objectid import ObjectId
 
@@ -26,7 +20,7 @@ def _reload_catalog(monkeypatch):
     mock_client = MagicMock(return_value=fake_client)
     monkeypatch.setattr("pymongo.MongoClient", mock_client)
 
-    catalog_module = importlib.import_module("catalog")
+    catalog_module = importlib.import_module("src.catalog")
     return importlib.reload(catalog_module), fake_category
 
 

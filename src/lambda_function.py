@@ -2,8 +2,8 @@ import json
 import boto3
 from bson import json_util
 
-from catalog import get_catalog
-from config import BUCKET
+from src.catalog import get_catalog
+from src.config import BUCKET
 
 s3_client = boto3.client("s3")
 
